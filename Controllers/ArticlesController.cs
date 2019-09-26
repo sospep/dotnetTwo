@@ -14,9 +14,11 @@ namespace dotnetTwo.Controllers
         {
             _logger = logger;
         }
+        public string articleTitle = "some article title";
 
          public IActionResult Index()
         {
+            ViewData["titleArticle"] = "article title - passing controller properties to a view";
              return View();             
         }
         
