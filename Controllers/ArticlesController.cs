@@ -14,15 +14,37 @@ namespace dotnetTwo.Controllers
         {
             _logger = logger;
         }
-        public string articleTitle = "some article title";
-
-         public IActionResult Index()
+        
+        public IActionResult Index()
         {
             ViewData["titleArticle"] = "article title - passing controller properties to a view";
              return View();             
         }
-        
-        // 
+
+        //
+        // GET: /Articles/Show/{id} 
+        public IActionResult Show()
+        {
+            return View();             
+        }
+
+        // add a new article
+        // GET: /Article/New 
+        public IActionResult New()
+        {
+            // displays input form to post a new article
+            return View();             
+        }
+
+        // edit an existing article
+        // GET: /Article/Edit/{id}
+        public IActionResult Edit()
+        {
+            // displays input form with current article values populated, 
+            return View();             
+        }
+
+        // example  
         // GET: /Articles/Welcome/ 
 
         public string Welcome()
