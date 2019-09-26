@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Create New Article";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"] </h1>
+    
+    <!-- add form to post article here -->    
+    <form>
+        <div class="form-group">
+            <label for="articleTitle">Article Title</label>
+            <input type="text" class="form-control" id="articleTitle" aria-describedby="articleTitle" placeholder="Enter article title">
+        </div>
+        
+        <div class="form-group">
+            <label for="articleContent">Article Content</label>
+            <input type="textarea" class="form-control" id="articleContent" placeholder="Enter your Article here">
+        </div>
+        <!--
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        -->
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    
+    
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core 3.0</a>.</p>
+</div>
