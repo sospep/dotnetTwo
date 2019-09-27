@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+// adding database sqlite and ef
+using dotnetTwo.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnetTwo
 {
@@ -18,11 +21,24 @@ namespace dotnetTwo
         }
 
         public IConfiguration Configuration { get; }
-
+        
+        
+        
+        /* SUPERSEEDed by the follwing version which add database 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+        }
+        */
+
+        // adding database
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+            services.AddDbContext<dotnetTwoContext>(options =>
+            options.UseSqlite(Configuration.GetConnectionString("dotnetTwoContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
