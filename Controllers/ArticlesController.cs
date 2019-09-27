@@ -1,55 +1,153 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using dotnetTwo.Data;
+using dotnetTwo.Models;
 
 namespace dotnetTwo.Controllers
 {
     public class ArticlesController : Controller
     {
-        // 
-        // GET: /Articles/
-        private readonly ILogger<ArticlesController> _logger;
+        private readonly dotnetTwoContext _context;
 
-        public ArticlesController(ILogger<ArticlesController> logger)
+        public ArticlesController(dotnetTwoContext context)
         {
-            _logger = logger;
-        }
-        
-        public IActionResult Index()
-        {
-            ViewData["titleArticle"] = "article title - passing controller properties to a view";
-             return View();             
+            _context = context;
         }
 
-        //
-        // GET: /Articles/Show/{id} 
-        public IActionResult Show()
+        // GET: Articles
+        public async Task<IActionResult> Index()
         {
-            return View();             
+            return View(await _context.Article.ToListAsync());
         }
 
-        // add a new article
-        // GET: /Article/New 
-        public IActionResult New()
+        // GET: Articles/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            // displays input form to post a new article
-            return View();             
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var article = await _context.Article
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return View(article);
         }
 
-        // edit an existing article
-        // GET: /Article/Edit/{id}
-        public IActionResult Edit()
+        // GET: Articles/Create
+        public IActionResult Create()
         {
-            // displays input form with current article values populated, 
-            return View();             
+            return View();
         }
 
-        // example  
-        // GET: /Articles/Welcome/ 
-
-        public string Welcome()
+        // POST: Articles/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Title,CreatedAt,Content,Price")] Article article)
         {
-            return "This is the Articles Welcome action method...";
+            if (ModelState.IsValid)
+            {
+                _context.Add(article);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(article);
+        }
+
+        // GET: Articles/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var article = await _context.Article.FindAsync(id);
+            if (article == null)
+            {
+                return NotFound();
+            }
+            return View(article);
+        }
+
+        // POST: Articles/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,CreatedAt,Content,Price")] Article article)
+        {
+            if (id != article.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(article);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ArticleExists(article.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(article);
+        }
+
+        // GET: Articles/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var article = await _context.Article
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return View(article);
+        }
+
+        // POST: Articles/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var article = await _context.Article.FindAsync(id);
+            _context.Article.Remove(article);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool ArticleExists(int id)
+        {
+            return _context.Article.Any(e => e.Id == id);
         }
     }
 }

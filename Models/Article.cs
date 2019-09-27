@@ -9,8 +9,7 @@ namespace dotnetTwo.Models
         public string Title { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime CreatedDate { get; set; }
-        
+        public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
         public decimal Price { get; set; }
     }
