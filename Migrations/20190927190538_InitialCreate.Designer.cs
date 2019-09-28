@@ -9,7 +9,7 @@ using dotnetTwo.Data;
 namespace dotnetTwo.Migrations
 {
     [DbContext(typeof(dotnetTwoContext))]
-    [Migration("20190926220007_InitialCreate")]
+    [Migration("20190927190538_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,29 @@ namespace dotnetTwo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Article");
+                });
+
+            modelBuilder.Entity("dotnetTwo.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Article_Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comment");
                 });
 #pragma warning restore 612, 618
         }

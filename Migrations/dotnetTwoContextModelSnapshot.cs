@@ -38,6 +38,29 @@ namespace dotnetTwo.Migrations
 
                     b.ToTable("Article");
                 });
+
+            modelBuilder.Entity("dotnetTwo.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Article_Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comment");
+                });
 #pragma warning restore 612, 618
         }
     }

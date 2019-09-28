@@ -22,12 +22,31 @@ namespace dotnetTwo.Migrations
                 {
                     table.PrimaryKey("PK_Article", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    Article_Id = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Article");
+
+            migrationBuilder.DropTable(
+                name: "Comment");
         }
     }
 }

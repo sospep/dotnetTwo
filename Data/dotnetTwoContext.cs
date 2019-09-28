@@ -11,5 +11,9 @@ namespace dotnetTwo.Data
         }
 
         public DbSet<Article> Article { get; set; }
+
+        public DbSet<dotnetTwo.Models.Comment> Comment { get; set; }
+        // public DbSet<Comment> Comment { get; set; }
+ 
     }
 }

@@ -28,19 +28,45 @@ namespace dotnetTwo.Controllers
         // GET: Articles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var twoModels = new ArticleComment();
             if (id == null)
             {
                 return NotFound();
             }
 
+            /*  original 
             var article = await _context.Article
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (article == null)
             {
                 return NotFound();
             }
+            twoModels.Article = article;
+            */
+             
+            twoModels.Article = await _context.Article
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (twoModels.Article == null)
+            {
+                return NotFound();
+            }
+            
+            // get the first comment for the article(if it exists) and assign it to the .Comment property of the ViewModel
+            // ?= required
+            var comment = await _context.Comment
+                .FirstOrDefaultAsync(m => m.Article_Id == id);
+            twoModels.Comment = comment;
 
-            return View(article);
+            // var comments = await _context.Comment.ToListAsync(); // PASS returns all commments
+            // List<Comment> comments = new List<Comment>(); 
+            // var comments = await _context.Comment.ToListAsync(m => m.id == id); // PASS BUT 1 returns comment with id matching id of article
+            var comments = await _context.Comment
+                .Where(m => m.Article_Id == id)
+                .ToListAsync();
+
+            twoModels.comments = (List<Comment>)comments;
+           
+            return View(twoModels);
         }
 
         // GET: Articles/Create
