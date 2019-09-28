@@ -1,0 +1,14 @@
+<!-- partial view that renders a list of comments for the selected article 
+[*] @Model.Comment.Title returns title of first comment
+[] add link to delete comment
+-->
+<div>
+    <h3>View Comments</h3>      
+    <div>
+    @foreach (var item in Model.comments) {
+        <strong>@item.Title</strong><br>
+        <p>@item.Content</p>
+        <a asp-controller="Comments" asp-action="Delete" asp-route-id=@item.Id> [x]</a><br>
+    }
+    </div>
+</div>
