@@ -52,18 +52,24 @@ namespace dotnetTwo.Controllers
             }
             
             // get the first comment for the article(if it exists) and assign it to the .Comment property of the ViewModel
-            // ?= required
+            // ?= required, doesnt look like i am using it
+            /* 
             var comment = await _context.Comment
                 .FirstOrDefaultAsync(m => m.Article_Id == id);
             twoModels.Comment = comment;
+            */
 
-            // var comments = await _context.Comment.ToListAsync(); // PASS returns all commments
+            // var comments = await _context.Comment.ToListAsync(); // PASS returns "all" commments
             // List<Comment> comments = new List<Comment>(); 
             // var comments = await _context.Comment.ToListAsync(m => m.id == id); // PASS BUT 1 returns comment with id matching id of article
             var comments = await _context.Comment
                 .Where(m => m.Article_Id == id)
                 .ToListAsync();
-
+            
+            if (comments == null)
+            {
+                return NotFound();
+            }
             twoModels.comments = (List<Comment>)comments;
            
             return View(twoModels);
