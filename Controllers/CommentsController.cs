@@ -52,12 +52,15 @@ namespace dotnetTwo.Controllers
         // POST: Comments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598. 
+        
+        // !!
         // removed [ValidateAntiForgeryToken] lets post go through, else
         
         [HttpPost]
        
-        public async Task<IActionResult> Create([Bind("Id,Title,CreatedAt,Content,Article_Id")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content,Article_Id")] Comment comment)
         {
+            comment.CreatedAt = DateTime.Now;
             
             if (ModelState.IsValid)
             // if (comment.Article_Id > 0)
