@@ -58,17 +58,17 @@ namespace dotnetTwo.Controllers
        
         public async Task<IActionResult> Create([Bind("Id,Title,CreatedAt,Content,Article_Id")] Comment comment)
         {
-            // var thisId = "/"+ comment.Article_Id.ToString();
-
-            if (comment.Article_Id > 0)
+            
+            if (ModelState.IsValid)
+            // if (comment.Article_Id > 0)
             {
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 // return RedirectToAction(nameof(Index));
                 return RedirectToAction("Details", new { controller="Articles", id = comment.Article_Id });
             }
-
             return View(comment);
+            // return RedirectToAction("Details", new { controller="Articles", id = comment.Article_Id });
         }
 
         // GET: Comments/Edit/5
