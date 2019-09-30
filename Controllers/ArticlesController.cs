@@ -80,8 +80,10 @@ namespace dotnetTwo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,CreatedAt,Content,Price")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content,Price")] Article article)
         {
+            article.CreatedAt = DateTime.Now;
+            
             if (ModelState.IsValid)
             {
                 _context.Add(article);
